@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createprofile } from "../../actions/profile";
-const CreateProfile = ({ createprofile }) => {
+import { getCurrentProfile } from "../../actions/profile";
+const CreateProfile = ({ createprofile, getCurrentProfile }) => {
+  useEffect(() => {
+    getCurrentProfile();
+  }, [getCurrentProfile]);
   const [formData, setFormData] = useState({
     company: "",
     website: "",
@@ -211,4 +215,6 @@ const CreateProfile = ({ createprofile }) => {
     </>
   );
 };
-export default connect(null, { createprofile })(CreateProfile);
+export default connect(null, { createprofile, getCurrentProfile })(
+  CreateProfile
+);

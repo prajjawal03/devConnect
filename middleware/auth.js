@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const config = require("config");
 module.exports = function (req, res, next) {
   //getting token from header
   const token = req.header("x-auth-token");
@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
   if (!token) return res.status(401).json({ msg: "authentication error" });
   //verify jwtToken
   try {
-    const decoded = jwt.verify(token, process.env.jwtToken);
+    const decoded = jwt.verify(token, config.get("JWTsecret"));
     req.user = decoded.payload.user;
     next();
   } catch (err) {

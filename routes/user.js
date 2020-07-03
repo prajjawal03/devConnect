@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const validator = require("../validation/user");
 const User = require("../models/User");
-require("dotenv").config();
+const config = require("config");
 
 // @route      POST api/user
 // @desc       register user
@@ -41,7 +41,7 @@ router.post("/", validator, async (req, res) => {
         id: user._id,
       },
     };
-    jwt.sign({ payload }, process.env.jwtToken, (err, token) => {
+    jwt.sign({ payload }, config.get("JWTsecret"), (err, token) => {
       if (err) throw err;
       res.json({
         token,

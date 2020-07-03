@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 const { validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
 const validator = require("../validation/auth");
@@ -44,7 +45,7 @@ router.post("/", validator, async (req, res) => {
         id: user._id,
       },
     };
-    jwt.sign({ payload }, process.env.jwtToken, (err, token) => {
+    jwt.sign({ payload }, config.get("JWTsecret"), (err, token) => {
       if (err) throw err;
       res.json({
         token,

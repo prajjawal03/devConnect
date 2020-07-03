@@ -1,15 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
-require("dotenv").config();
+const connectDB = require("./config/db");
 const app = express();
 
 //connectting mongodb
-const db = process.env.mongo_url;
-mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((res) => console.log("connected to db"))
-  .catch((err) => console.log(err));
-
+connectDB();
 //bodyparser
 app.use(express.json());
 //middlewares
